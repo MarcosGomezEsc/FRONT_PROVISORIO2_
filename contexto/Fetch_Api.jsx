@@ -13,24 +13,27 @@ export function AutoProvider({ children }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `${API_URL}/autos?offset=${(currentPage - 1) * 10}&limit=10`
-        );
+        const response = await fetch(`${API_URL}`);
         if (!response.ok) {
           throw new Error("Error al obtener datos");
         }
         const newData = await response.json();
 
-        // Puedes adaptar esta lógica según la estructura de tus datos
+        // Hacer algo con newData antes de actualizar el estado
+        // ...
+
         setData(newData);
       } catch (error) {
         console.error("Error con Fetch:", error);
+        setData([]); // Otra vez, maneja el error según tus necesidades
       } finally {
         setLoading(false);
       }
     };
     fetchData();
   }, [currentPage]);
+
+  console.log(data);
 
   const contextValue = { data, loading, setCurrentPage }; // Agregar setCurrentPage al contexto
 
